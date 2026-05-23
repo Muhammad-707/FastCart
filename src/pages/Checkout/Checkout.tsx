@@ -7,7 +7,7 @@ export default function Checkout() {
   const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
-    <div className="max-w-[1170px] mx-auto px-6 pt-10 pb-20 font-sans  dark:text-white transition-colors duration-300">
+    <div className="max-w-[1300px] mx-auto px-6 pt-10 pb-20 font-sans  dark:text-white transition-colors duration-300">
       
       {/* НАВИГАЦИЯ */}
       <nav className="mb-20 text-sm text-zinc-400">
@@ -21,7 +21,7 @@ export default function Checkout() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[150px] items-start">
         
         {/* ЛЕВАЯ ЧАСТЬ: ФОРМА */}
-        <div className="bg-white dark:bg-zinc-900 p-8 rounded shadow-lg border border-zinc-100 dark:border-zinc-800 transition-colors">
+        <div className="bg-white lg:w-[500px] dark:bg-zinc-900 p-8 rounded shadow-lg border border-zinc-100 dark:border-zinc-800 transition-colors">
           <div className="flex flex-col gap-6">
             {[
               "First name", "Last name", "Street address", 
@@ -83,7 +83,7 @@ export default function Checkout() {
               <input type="radio" name="pay" className="w-5 h-5 accent-black dark:accent-white" /> Cash on delivery
             </label>
             
-            <div className="flex gap-4">
+            <div className="flex lg:flex-row flex-col gap-4">
               <input placeholder="Coupon Code" className="border border-black dark:border-zinc-700 bg-transparent px-4 py-3 flex-1 rounded-sm outline-none" />
               <button className="bg-[#DB4444] text-white px-10 py-3 rounded-sm hover:bg-[#b93838] transition-colors">Apply</button>
             </div>

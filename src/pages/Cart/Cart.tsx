@@ -58,8 +58,8 @@ export default function Cart() {
       </div>
 
       <div className="flex flex-col md:flex-row justify-between gap-10 mt-10">
-        <div className="flex gap-4 h-14">
-          <input placeholder="Coupon Code" className="border border-black dark:border-zinc-600 bg-transparent px-4 rounded-sm w-64" />
+        <div className="flex lg:flex-row flex-col gap-4 h-14">
+          <input placeholder="Coupon Code" className="border border-black dark:border-zinc-600 bg-transparent px-4 rounded-sm lg:py-0 py-1 w-full lg:w-64" />
           <button className="bg-[#DB4444] text-white px-12 py-3 rounded-sm hover:bg-[#b93838] transition-colors">Apply</button>
         </div>
 
