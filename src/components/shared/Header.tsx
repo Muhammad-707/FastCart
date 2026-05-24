@@ -11,9 +11,11 @@ export default function Header() {
   const [lang, setLang] = useState<"EN" | "RU">("EN");
   const [isDark, setIsDark] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Добавлено состояние для скрытия Sign Up
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // РЕАКТИВНОСТЬ: useSelector подписывает компонент на изменения в Redux
-  // Теперь при изменении cart.items компонент сам перерисуется мгновенно
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const cartCount = cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0);
 
@@ -24,6 +26,12 @@ export default function Header() {
 
   const userMenuRef = useRef<HTMLDivElement>(null);
   const mobileUserMenuRef = useRef<HTMLDivElement>(null);
+
+  // Проверяем авторизацию каждый раз при смене роута (чтобы скрылось резко при переходе на главную)
+  useEffect(() => {
+    const authStatus = localStorage.getItem("isAuthenticated") === "true";
+    setIsAuthenticated(authStatus);
+  }, [location.pathname]);
 
   useEffect(() => {
     const isDarkMode = document.documentElement.classList.contains("dark");
@@ -72,6 +80,8 @@ export default function Header() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated"); // Удаляем статус авторизации при выходе
+    setIsAuthenticated(false);
     setIsUserMenuOpen(false);
     setIsMobileUserMenuOpen(false);
     navigate("/SignUp");
@@ -175,7 +185,11 @@ export default function Header() {
           <Link to="/" className={`relative py-1 transition-all ${isActive("/") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>Home</Link>
           <Link to="/Contact" className={`relative py-1 transition-all ${isActive("/Contact") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>Contact</Link>
           <Link to="/About" className={`relative py-1 transition-all ${isActive("/About") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>About</Link>
-          <Link to="/SignUp" className={`relative py-1 transition-all ${isActive("/SignUp") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>Sign Up</Link>
+          
+          {/* Скрываем Sign Up если пользователь уже вошел */}
+          {!isAuthenticated && (
+            <Link to="/SignUp" className={`relative py-1 transition-all ${isActive("/SignUp") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>Sign Up</Link>
+          )}
         </nav>
 
         <div className="flex items-center gap-4">
@@ -299,7 +313,11 @@ export default function Header() {
             <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">Home</Link>
             <Link to="/Contact" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">Contact</Link>
             <Link to="/About" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">About</Link>
-            <Link to="/SignUp" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">Sign Up</Link>
+            
+            {/* Скрываем Sign Up и из мобильного меню тоже */}
+            {!isAuthenticated && (
+              <Link to="/SignUp" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">Sign Up</Link>
+            )}
           </nav>
         </div>
 
@@ -311,10 +329,13 @@ export default function Header() {
           <button onClick={toggleLanguage} className="flex items-center gap-2 w-full justify-center h-10 border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 rounded-xl text-sm font-semibold text-zinc-800 dark:text-white">
             <span>Language: {lang}</span>
           </button>
-
-          <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)} className="w-full bg-zinc-900 dark:bg-white text-white dark:text-black text-center font-medium py-3 rounded-xl shadow-sm block text-sm">
-            Login Account
-          </Link>
+          
+          {/* Если не авторизован, показываем кнопку Login внизу мобильного меню */}
+          {!isAuthenticated && (
+            <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)} className="w-full bg-zinc-900 dark:bg-white text-white dark:text-black text-center font-medium py-3 rounded-xl shadow-sm block text-sm">
+              Login Account
+            </Link>
+          )}
         </div>
       </div>
     </header>
