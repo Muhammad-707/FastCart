@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 
 export default function SignUp() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -18,13 +20,13 @@ export default function SignUp() {
       phoneNumber: ""
     },
     validationSchema: Yup.object({
-      userName: Yup.string().required("Username is required"),
-      email: Yup.string().email("Invalid email address").required("Email is required"),
-      password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+      userName: Yup.string().required(`${t("text20")}`),
+      email: Yup.string().email(`${t("text22")}`).required(`${t("text21")}`),
+      password: Yup.string().min(6, `${t("text23a")}`).required(`${t("text23")}`),
       confirmPassword: Yup.string()
-        .required("Confirm Password is required")
-        .oneOf([Yup.ref('password')], "Passwords must match"),
-      phoneNumber: Yup.string().required("Phone number is required")
+        .required(`${t("text24")}`)
+        .oneOf([Yup.ref('password')], `${t("text24a")}`),
+      phoneNumber: Yup.string().required(`${t("text24b")}`)
     }),
     onSubmit: async (values) => {
       try {
@@ -72,10 +74,10 @@ export default function SignUp() {
       <div className="min-h-screen w-full flex items-center justify-center mt-[-10px] bg-white dark:bg-zinc-950 px-4 font-sans antialiased transition-colors duration-300 selection:bg-red-500/10 selection:text-[#DB4444]">
         <div className="w-full max-w-[400px] flex flex-col text-left my-10 bg-transparent transition-all">
           <h1 className="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 mb-2">
-            Create an account
+            {t("text9")}
           </h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-8 font-normal">
-            Enter your details below
+            {t("text10")}
           </p>
           <form className="flex flex-col w-full gap-5" onSubmit={formik.handleSubmit}>
             <div className="relative w-full">
@@ -93,7 +95,7 @@ export default function SignUp() {
                   } rounded-lg py-3.5 px-4 text-sm text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-4 transition-all duration-200`}
               />
               <label htmlFor="signup-username" className="absolute left-3 bg-zinc-50 dark:bg-zinc-950 peer-focus:bg-zinc-50 dark:peer-focus:bg-zinc-950 px-1.5 transition-all duration-200 pointer-events-none -top-2 text-xs text-zinc-400 dark:text-zinc-500 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-zinc-400 dark:peer-placeholder-shown:text-zinc-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-zinc-500 dark:peer-focus:text-zinc-400">
-                Username
+                {t("text11")}
               </label>
               {formik.touched.userName && formik.errors.userName && (
                 <p className="text-red-500 dark:text-red-400 text-xs mt-1.5 font-medium flex items-center gap-1">
@@ -116,7 +118,7 @@ export default function SignUp() {
                   } rounded-lg py-3.5 px-4 text-sm text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-4 transition-all duration-200`}
               />
               <label htmlFor="signup-email" className="absolute left-3 bg-zinc-50 dark:bg-zinc-950 peer-focus:bg-zinc-50 dark:peer-focus:bg-zinc-950 px-1.5 transition-all duration-200 pointer-events-none -top-2 text-xs text-zinc-400 dark:text-zinc-500 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-zinc-400 dark:peer-placeholder-shown:text-zinc-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-zinc-500 dark:peer-focus:text-zinc-400">
-                Email
+                {t("text12")}
               </label>
               {formik.touched.email && formik.errors.email && (
                 <p className="text-red-500 dark:text-red-400 text-xs mt-1.5 font-medium">
@@ -139,7 +141,7 @@ export default function SignUp() {
                   } rounded-lg py-3.5 px-4 text-sm text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-4 transition-all duration-200`}
               />
               <label htmlFor="signup-phone" className="absolute left-3 bg-zinc-50 dark:bg-zinc-950 peer-focus:bg-zinc-50 dark:peer-focus:bg-zinc-950 px-1.5 transition-all duration-200 pointer-events-none -top-2 text-xs text-zinc-400 dark:text-zinc-500 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-zinc-400 dark:peer-placeholder-shown:text-zinc-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-zinc-500 dark:peer-focus:text-zinc-400">
-                Phone Number
+                {t("text13")}
               </label>
               {formik.touched.phoneNumber && formik.errors.phoneNumber && (
                 <p className="text-red-500 dark:text-red-400 text-xs mt-1.5 font-medium">
@@ -162,7 +164,7 @@ export default function SignUp() {
                   } rounded-lg py-3.5 pl-4 pr-12 text-sm text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-4 transition-all duration-200`}
               />
               <label htmlFor="signup-password" className="absolute left-3 bg-zinc-50 dark:bg-zinc-950 peer-focus:bg-zinc-50 dark:peer-focus:bg-zinc-950 px-1.5 transition-all duration-200 pointer-events-none -top-2 text-xs text-zinc-400 dark:text-zinc-500 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-zinc-400 dark:peer-placeholder-shown:text-zinc-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-zinc-500 dark:peer-focus:text-zinc-400">
-                Password
+                {t("text14")}
               </label>
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -190,7 +192,7 @@ export default function SignUp() {
                   } rounded-lg py-3.5 pl-4 pr-12 text-sm text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-4 transition-all duration-200`}
               />
               <label htmlFor="signup-confirm-password" className="absolute left-3 bg-zinc-50 dark:bg-zinc-950 peer-focus:bg-zinc-50 dark:peer-focus:bg-zinc-950 px-1.5 transition-all duration-200 pointer-events-none -top-2 text-xs text-zinc-400 dark:text-zinc-500 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-zinc-400 dark:peer-placeholder-shown:text-zinc-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-zinc-500 dark:peer-focus:text-zinc-400">
-                Confirm Password
+                {t("text15")}
               </label>
               <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -204,7 +206,7 @@ export default function SignUp() {
               )}
             </div>
             <button type="submit" className="w-full bg-[#DB4444] hover:bg-[#c23b3b] dark:bg-red-600 dark:hover:bg-red-700 text-white font-medium py-3.5 rounded-lg text-sm shadow-sm hover:shadow-md hover:shadow-red-500/10 active:scale-[0.98] transition-all duration-200 mt-2">
-              Create Account
+              {t("text16")}
             </button>
             <button
               type="button"
@@ -217,13 +219,13 @@ export default function SignUp() {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05" />
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
               </svg>
-              <span>Sign up with Google</span>
+              <span>{t("text17")}</span>
             </button>
           </form>
           <div className="mt-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
-            Already have account?{" "}
+            {t("text18")}{" "}
             <Link to="/Login" className="text-zinc-900 dark:text-zinc-50 font-medium underline underline-offset-4 hover:text-[#DB4444] dark:hover:text-red-400 transition-colors ml-1">
-              Log in
+              {t("text19")}
             </Link>
           </div>
         </div>
@@ -236,10 +238,10 @@ export default function SignUp() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </div>
-            <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-1.5">Registration Error</h3>
+            <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-1.5">{t("text19a")}</h3>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-5 leading-normal px-2">{errorModal.message}</p>
             <button onClick={() => setErrorModal({ isOpen: false, message: "" })} className="w-full bg-[#DB4444] hover:bg-[#c23b3b] dark:bg-red-600 dark:hover:bg-red-700 text-white font-medium py-2.5 rounded-lg text-sm shadow-sm transition-colors duration-200">
-              Try Again
+              {t("text19b")}
             </button>
           </div>
         </div>

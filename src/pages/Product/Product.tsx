@@ -7,8 +7,10 @@ import Card1 from '@/pages/Product/Card1';
 import Sidebar from '@/pages/Product/Sidebar';
 import { LayoutGrid, List } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 export default function ProductPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
@@ -38,7 +40,6 @@ export default function ProductPage() {
           return false;
         }
       }
-
       return true;
     });
   }, [items, filters.rating, filters.condition]);
@@ -52,8 +53,8 @@ export default function ProductPage() {
       <div className="bg-white dark:bg-zinc-950 py-6 mb-4 border-b border-gray-100 dark:border-zinc-900">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className='flex items-center gap-3 cursor-pointer'>
-            <p onClick={() => navigate("/")} className="text-xs text-gray-400 dark:text-zinc-500 hover:text-black">Home / </p>
-            <p className="text-xs text-black dark:text-white font-normal">Explore Our Products</p>
+            <p onClick={() => navigate("/")} className="text-xs text-gray-400 dark:text-zinc-500 hover:text-black">{t("text96")}</p>
+            <p className="text-xs text-black dark:text-white font-normal">{t("text97")}</p>
           </div>
         </div>
       </div>
@@ -66,18 +67,14 @@ export default function ProductPage() {
         <main className="flex-1">
           <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4 w-full">
             <div className="text-sm text-gray-500 dark:text-zinc-400">
-              Found <span className="font-semibold text-black dark:text-white">{filteredItems.length}</span> items
+              {t("text97a")} <span className="font-semibold text-black dark:text-white">{filteredItems.length}</span> {t("text97b")}
             </div>
             <div className="flex items-center gap-4 ml-auto">
-              <div className="flex gap-2 pr-2">
-                <button className="p-1 text-black dark:text-white"><LayoutGrid size={18} /></button>
-                <button className="p-1 text-gray-300 dark:text-zinc-700"><List size={18} /></button>
-              </div>
               <div className="border border-gray-300 dark:border-zinc-800 rounded px-3 py-1.5 bg-transparent min-w-[140px] flex justify-between items-center">
                 <select className="border-none text-sm text-black dark:text-white bg-transparent focus:ring-0 cursor-pointer outline-none w-full pr-4">
-                  <option className="bg-white dark:bg-zinc-900">Popularity</option>
-                  <option className="bg-white dark:bg-zinc-900">Price: Low to High</option>
-                  <option className="bg-white dark:bg-zinc-900">Price: High to Low</option>
+                  <option className="bg-white dark:bg-zinc-900">{t("text97c")}</option>
+                  <option className="bg-white dark:bg-zinc-900">{t("text97d")}</option>
+                  <option className="bg-white dark:bg-zinc-900">{t("text97e")}</option>
                 </select>
               </div>
             </div>
@@ -91,15 +88,15 @@ export default function ProductPage() {
             <>
               {filteredItems.length === 0 ? (
                 <div className="p-16 text-center border border-dashed border-gray-200 dark:border-zinc-800 rounded-xl">
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-zinc-300 mb-2">No products found</h3>
-                  <p className="text-gray-500 dark:text-zinc-500">Try adjusting your filters or search criteria.</p>
+                  <h3 className="text-xl font-semibold text-gray-800 dark:text-zinc-300 mb-2">{t("text97f")}</h3>
+                  <p className="text-gray-500 dark:text-zinc-500">{t("text97g")}</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                   {filteredItems.slice(0, visibleCount).map((product) => (
                     <Card1
                       key={product.id}
-                      image={product.image.includes('http') ? product.image : `https://fastcard-1-o23z.onrender.com/images/${product.image}`}
+                      image={product.image?.includes('http') ? product.image : `https://fastcard-1-o23z.onrender.com/images/${product.image || ''}`}
                       title={product.productName}
                       price={`$${product.hasDiscount ? product.discountPrice : product.price}`}
                       reviews={product.rating || 0}
@@ -114,7 +111,7 @@ export default function ProductPage() {
                     onClick={handleLoadMore}
                     className="px-12 py-3.5 bg-[#DB4444] text-white font-medium rounded hover:bg-[#c23b3b] transition-all duration-200 shadow-sm"
                   >
-                    More Products
+                    {t("text97h")}
                   </button>
                 </div>
               )}

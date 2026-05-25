@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/reducers/AuthSlice";
 import { RootState } from "@/store/store";
 
 export default function Account() {
+  const { t } = useTranslation();
   const [notification, setNotification] = useState({ show: false, message: "", type: "success" });
 
   const dispatch = useDispatch();
@@ -87,31 +89,31 @@ export default function Account() {
 
         <div className="flex items-center gap-2 text-sm text-zinc-500 mb-8 md:mb-12">
           <Link to="/" className="hover:text-[#DB4444] transition-colors">
-            Home
+            {t("text1")}
           </Link>
           <span>/</span>
-          <span className="text-zinc-900 dark:text-zinc-100 font-medium">My Account</span>
+          <span className="text-zinc-900 dark:text-zinc-100 font-medium">{t("text48")}</span>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           <aside className="w-full lg:w-[250px] flex flex-col gap-8 shrink-0">
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-4 text-base">Manage My Account</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-4 text-base">{t("text147")}</h4>
               <div className="flex flex-col gap-3 pl-0 sm:pl-4 text-sm text-zinc-500 dark:text-zinc-400">
-                <span className="text-[#DB4444] font-medium cursor-pointer transition-colors">My Profile</span>
-                <span className="cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Address Book</span>
-                <span className="cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">My Payment Options</span>
+                <span className="text-[#DB4444] font-medium cursor-pointer transition-colors">{t("text148")}</span>
+                <span className="cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">{t("text149")}</span>
+                <span className="cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">{t("text150")}</span>
               </div>
             </div>
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-4 text-base">My Orders</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-4 text-base">{t("text151")}</h4>
               <div className="flex flex-col gap-3 pl-0 sm:pl-4 text-sm text-zinc-500 dark:text-zinc-400">
-                <span className="cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">My Returns</span>
-                <span className="cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">My Cancellations</span>
+                <span className="cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">{t("text152")}</span>
+                <span className="cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">{t("text153")}</span>
               </div>
             </div>
             <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 cursor-pointer hover:text-[#DB4444] transition-colors text-base">
-              My WishList
+              {t("text154")}
             </h4>
           </aside>
 
@@ -122,11 +124,11 @@ export default function Account() {
               </div>
             )}
 
-            <h2 className="text-xl md:text-2xl font-bold text-[#DB4444] mb-8 mt-2">Edit Your Profile</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-[#DB4444] mb-8 mt-2">{t("text155")}</h2>
             <form className="flex flex-col gap-6" onSubmit={formik.handleSubmit}>
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1 flex flex-col gap-2 relative">
-                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Username</label>
+                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("text156")}</label>
                   <input
                     type="text"
                     name="userName"
@@ -140,7 +142,7 @@ export default function Account() {
                   )}
                 </div>
                 <div className="flex-1 flex flex-col gap-2 relative">
-                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Phone Number</label>
+                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("text157")}</label>
                   <input
                     type="text"
                     name="phoneNumber"
@@ -157,7 +159,7 @@ export default function Account() {
 
               <div className="flex flex-col md:flex-row gap-6 mt-2">
                 <div className="flex-1 flex flex-col gap-2 relative">
-                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Email address</label>
+                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("text158")}</label>
                   <input
                     type="email"
                     name="email"
@@ -175,13 +177,13 @@ export default function Account() {
               <div className="h-px w-full bg-zinc-100 dark:bg-zinc-800 my-4"></div>
 
               <div className="flex flex-col gap-5">
-                <h4 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">Password Changes</h4>
+                <h4 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">{t("text160")}</h4>
 
                 <div className="relative">
                   <input
                     type="password"
                     name="currentPassword"
-                    placeholder="Current password"
+                    placeholder={t("text161")}
                     value={formik.values.currentPassword}
                     onChange={formik.handleChange}
                     className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 p-3.5 rounded-lg outline-none text-sm text-zinc-900 dark:text-zinc-100 transition-all focus:border-[#DB4444] focus:ring-4 focus:ring-[#DB4444]/20 placeholder-zinc-400 dark:placeholder-zinc-600"
@@ -192,7 +194,7 @@ export default function Account() {
                   <input
                     type="password"
                     name="newPassword"
-                    placeholder="New password"
+                    placeholder={t("text162")}
                     value={formik.values.newPassword}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -207,7 +209,7 @@ export default function Account() {
                   <input
                     type="password"
                     name="confirmNewPassword"
-                    placeholder="Confirm new password"
+                    placeholder={t("text163")}
                     value={formik.values.confirmNewPassword}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -225,13 +227,13 @@ export default function Account() {
                   onClick={() => formik.resetForm()}
                   className="w-full sm:w-auto text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                 >
-                  Cancel
+                  {t("text164")}
                 </button>
                 <button
                   type="submit"
                   className="w-full sm:w-auto bg-[#DB4444] text-white px-8 py-3.5 rounded-lg text-sm font-medium hover:bg-[#c23b3b] hover:shadow-lg hover:shadow-red-500/20 active:scale-[0.98] transition-all duration-200"
                 >
-                  Save Changes
+                  {t("text165")}
                 </button>
               </div>
             </form>

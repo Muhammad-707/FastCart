@@ -1,19 +1,21 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
+    const { t } = useTranslation();
   return (
     <footer className="w-full bg-black text-white font-sans pt-16 pb-6 mt-auto">
       <div className="max-w-[1400px] mx-auto px-6 flex flex-col md:grid md:grid-cols-5 gap-8 text-left pb-12 border-b border-zinc-800">
         <div className="flex flex-col gap-4">
           <Link to="/" className="text-2xl font-bold tracking-tight text-white">
-            Exclusive
+            {t("text39")}
           </Link>
-          <h3 className="text-lg font-medium text-zinc-100">Subscribe</h3>
-          <p className="text-sm text-zinc-300">Get 10% off your first order</p>
+          <h3 className="text-lg font-medium text-zinc-100">{t("text40")}</h3>
+          <p className="text-sm text-zinc-300">{t("text41")}</p>
           <div className="relative mt-2 max-w-[240px] md:w-full">
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder={t("text42")}
               className="w-full bg-transparent border border-white rounded-md py-2.5 pl-4 pr-10 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-zinc-400 transition-colors"
             />
             <button
@@ -30,12 +32,12 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col gap-4 mt-2 md:mt-0">
-          <h3 className="text-lg font-medium text-white">Support</h3>
+          <h3 className="text-lg font-medium text-white">{t("text43")}</h3>
           <p className="text-sm text-zinc-300 leading-relaxed max-w-[200px]">
-            111 Bijoy sarani, Dhaka, <br /> DH 1515, Bangladesh.
+            {t("text44")} <br /> {t("text44a")}
           </p>
           <a href="mailto:exclusive@gmail.com" className="text-sm text-zinc-300 hover:text-white transition-colors">
-            exclusive@gmail.com
+            {t("text45")}
           </a>
           <a href="tel:+8801588889999" className="text-sm text-zinc-300 hover:text-white transition-colors">
             +88015-8888-9999
@@ -44,29 +46,28 @@ export default function Footer() {
 
         <div className="grid grid-cols-2 gap-4 md:contents">
           <div className="flex flex-col gap-4">
-            <h3 className="text-lg font-medium text-white">Account</h3>
+            <h3 className="text-lg font-medium text-white">{t("text47")}</h3>
             <nav className="flex flex-col gap-2.5 text-sm text-zinc-300">
-              <Link to="/profile" className="hover:text-white transition-colors">My Account</Link>
-              <Link to="/Login" className="hover:text-white transition-colors">Login / Register</Link>
-              <Link to="/cart" className="hover:text-white transition-colors">Cart</Link>
-              <Link to="/wishlist" className="hover:text-white transition-colors">Wishlist</Link>
-              <Link to="/shop" className="hover:text-white transition-colors">Shop</Link>
+              <p className="hover:text-white transition-colors">{t("text48")}</p>
+              <p className="hover:text-white transition-colors">{t("text49")}</p>
+              <p className="hover:text-white transition-colors">{t("text50")}</p>
+              <p className="hover:text-white transition-colors">{t("text51")}</p>
             </nav>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h3 className="text-lg font-medium text-white">Quick Link</h3>
+            <h3 className="text-lg font-medium text-white">{t("text52")}</h3>
             <nav className="flex flex-col gap-2.5 text-sm text-zinc-300">
-              <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-white transition-colors">Terms Of Use</Link>
-              <Link to="/faq" className="hover:text-white transition-colors">FAQ</Link>
-              <Link to="/Contact" className="hover:text-white transition-colors">Contact</Link>
+              <p className="hover:text-white transition-colors">{t("text53")}</p>
+              <p className="hover:text-white transition-colors">{t("text54")}</p>
+              <p className="hover:text-white transition-colors">{t("text55")}</p>
+              <p className="hover:text-white transition-colors">{t("text56")}</p>
             </nav>
           </div>
         </div>
 
         <div className="flex flex-col gap-4 mt-2 md:mt-0">
-          <h3 className="text-lg font-medium text-white">Social</h3>
+          <h3 className="text-lg font-medium text-white">{t("text7")}</h3>
           <div className="flex items-center gap-6 text-white mt-1">
             <a href="https://facebook.com" target="_blank" rel="noreferrer" className="hover:text-zinc-400 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -94,7 +95,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="w-full text-center pt-6 text-zinc-600 text-sm font-light">
-        <p>&copy; Copyright Rimel 2022. All right reserved</p>
+        <p>&copy; {t("text57a")}</p>
       </div>
     </footer>
   );

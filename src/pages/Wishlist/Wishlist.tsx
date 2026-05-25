@@ -4,6 +4,8 @@ import 'swiper/css';
 import { useWishlist } from "@/pages/Wishlist/WishlistContext";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+
 
 import { fetchProducts } from "@/reducers/ProductSlice"; 
 import type { RootState, AppDispatch } from "@/store/store";
@@ -12,6 +14,7 @@ import Card1 from './Card1';
 import Card2 from './Card2';
 
 export default function Wishlist() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { wishlist = [] } = useWishlist();
     const dispatch = useDispatch<AppDispatch>();
@@ -49,10 +52,10 @@ export default function Wishlist() {
         <div className="max-w-[1440px] mx-auto px-4 md:px-20 pt-10 pb-20 font-sans">
             <div className="flex justify-between items-center mb-10">
                 <h2 className="text-xl font-normal text-black dark:text-white tracking-wide">
-                    Wishlist ({localWishlist.length})
+                    {t("text98")} ({localWishlist.length})
                 </h2>
                 <button className="border border-black/30 dark:border-white/30 text-black dark:text-white px-12 py-4 rounded-[4px] font-medium text-base hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
-                    Move All To Bag
+                    {t("text99")}
                 </button>
             </div>
 
@@ -77,11 +80,11 @@ export default function Wishlist() {
                 <div className="flex items-center gap-4">
                     <div className="w-5 h-10 bg-[#DB4444] rounded-[4px]"></div>
                     <h2 className="text-xl font-normal text-black dark:text-white tracking-wide">
-                        Just For You
+                        {t("text100")}
                     </h2>
                 </div>
                 <button onClick={() => navigate('/product')} className="border border-black/30 dark:border-white/30 text-black dark:text-white px-12 py-4 rounded-[4px] font-medium text-base hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
-                    See All
+                    {t("text101")}
                 </button>
             </div>
 

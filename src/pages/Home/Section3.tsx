@@ -10,6 +10,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Card4 } from './Card4'; 
 import type { RootState } from '@/store/store';
+import { useTranslation } from "react-i18next";
+
 
 const getCategoryIcon = (name: string) => {
   const key = String(name || '').toLowerCase().trim();
@@ -30,6 +32,7 @@ const getCategoryIcon = (name: string) => {
 
 export default function Section3() {
   const { items } = useSelector((state: RootState) => state.categories);
+  const { t } = useTranslation();
   const [active, setActive] = useState('');
 
   return (
@@ -38,9 +41,9 @@ export default function Section3() {
         <div className="flex flex-col gap-5">
           <div className="flex items-center gap-3">
             <div className="w-5 h-10 bg-[#DB4444] rounded-sm"></div>
-            <span className="text-[#DB4444] font-semibold">Categories</span>
+            <span className="text-[#DB4444] font-semibold">{t("text68")}</span>
           </div>
-          <h2 className="text-3xl font-semibold tracking-wide dark:text-white">Browse By Category</h2>
+          <h2 className="text-3xl font-semibold tracking-wide dark:text-white">{t("text69")}</h2>
         </div>
         <div className="flex gap-2">
           <button className="cat-prev p-3 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors dark:text-white">

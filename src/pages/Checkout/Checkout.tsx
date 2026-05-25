@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux';
 import { type RootState } from '@/store/store';
 import { Link } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 export default function Checkout() {
+  const { t } = useTranslation();
   const { items } = useSelector((state: RootState) => state.cart);
   const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -10,12 +12,12 @@ export default function Checkout() {
     <div className="max-w-[1400px] mx-auto px-6 pt-10 pb-20 font-sans  dark:text-white transition-colors duration-300">
       
       <nav className="mb-20 text-sm text-zinc-400">
-        <Link to="/account" className="hover:text-black dark:hover:text-zinc-200">Account</Link> / 
-        <Link to="/cart" className="hover:text-black dark:hover:text-zinc-200"> My Cart</Link> / 
-        <span className="text-black dark:text-white font-medium"> CheckOut</span>
+        <Link to="/product" className="hover:text-black dark:hover:text-zinc-200">{t("text126")} </Link> / 
+        <Link to="/cart" className="hover:text-black dark:hover:text-zinc-200">{t("text127")}</Link> / 
+        <span className="text-black dark:text-white font-medium"> {t("text128")}</span>
       </nav>
 
-      <h1 className="text-4xl font-semibold mb-12">Billing Details</h1>
+      <h1 className="text-4xl font-semibold mb-12">{t("text129")}</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[150px] items-start">
         
@@ -39,7 +41,7 @@ export default function Checkout() {
                 type="checkbox" 
                 className="w-6 h-6 accent-[#DB4444] rounded border-zinc-300" 
               />
-              <span className="text-sm">Save this information for faster check-out next time</span>
+              <span className="text-sm">{t("text137")}</span>
             </label>
           </div>
         </div>
@@ -66,15 +68,15 @@ export default function Checkout() {
           </div>
 
           <div className="space-y-4 pt-6 border-t border-zinc-200 dark:border-zinc-800">
-            <div className="flex justify-between"><span>Subtotal:</span><span>${subtotal.toFixed(2)}</span></div>
-            <div className="flex justify-between"><span>Shipping:</span><span>Free</span></div>
-            <div className="flex justify-between font-bold text-lg"><span>Total:</span><span>${subtotal.toFixed(2)}</span></div>
+            <div className="flex justify-between"><span>{t("text138")}</span><span>${subtotal.toFixed(2)}</span></div>
+            <div className="flex justify-between"><span>{t("text139")}</span><span>{t("text114a")}</span></div>
+            <div className="flex justify-between font-bold text-lg"><span>{t("text140")}</span><span>${subtotal.toFixed(2)}</span></div>
           </div>
 
           <div className="space-y-6">
             <label className="flex items-center justify-between cursor-pointer">
               <div className="flex items-center gap-3 font-medium">
-                <input type="radio" name="pay" className="w-5 h-5 accent-black dark:accent-white" /> Bank
+                <input type="radio" name="pay" className="w-5 h-5 accent-black dark:accent-white" /> {t("text141")}
               </div>
               <div className="flex gap-2">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" className="w-8 h-5 object-contain" />
@@ -84,15 +86,15 @@ export default function Checkout() {
               </div>
             </label>
             <label className="flex items-center gap-3 cursor-pointer">
-              <input type="radio" name="pay" className="w-5 h-5 accent-black dark:accent-white" /> Cash on delivery
+              <input type="radio" name="pay" className="w-5 h-5 accent-black dark:accent-white" /> {t("text142")}
             </label>
             
             <div className="flex lg:flex-row flex-col gap-4">
               <input placeholder="Coupon Code" className="border border-black dark:border-zinc-700 bg-transparent px-4 py-3 flex-1 rounded-sm outline-none" />
-              <button className="bg-[#DB4444] text-white px-10 py-3 rounded-sm hover:bg-[#b93838] transition-colors">Apply</button>
+              <button className="bg-[#DB4444] text-white px-10 py-3 rounded-sm hover:bg-[#b93838] transition-colors">{t("text144")}</button>
             </div>
             
-            <button className="bg-[#DB4444] text-white px-12 py-4 rounded-sm w-full hover:bg-[#b93838] transition-colors">Place Order</button>
+            <button className="bg-[#DB4444] text-white px-12 py-4 rounded-sm w-full hover:bg-[#b93838] transition-colors">{t("text145")}</button>
           </div>
         </div>
       </div>

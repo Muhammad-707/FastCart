@@ -2,17 +2,27 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
+import { useTranslation } from "react-i18next";
 
 import i1 from "@/assets/Group 1116606595 (2).png";
 import i2 from "@/assets/Group 1116606595 (5).png";
 
 export default function Header() {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const [lang, setLang] = useState<"EN" | "RU">("EN");
+  const { i18n } = useTranslation();
+
+  const [lang, setLang] = useState(() => {
+    const saved = localStorage.getItem("i18nextLng") || "en";
+    if (saved.includes("ru")) return "RU";
+    if (saved.includes("tj")) return "TJ";
+    return "EN";
+  });
+
   const [isDark, setIsDark] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const cartItems = useSelector((state: RootState) => state.cart.items);
@@ -34,7 +44,7 @@ export default function Header() {
   useEffect(() => {
     const isDarkMode = document.documentElement.classList.contains("dark");
     setIsDark(isDarkMode);
-    
+
     const syncWishlist = () => {
       const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
       setWishlistCount(savedWishlist.length);
@@ -74,7 +84,11 @@ export default function Header() {
   };
 
   const toggleLanguage = () => {
-    setLang((prev) => (prev === "EN" ? "RU" : "EN"));
+    setLang((prev) => {
+      const nextLang = prev === "EN" ? "RU" : prev === "RU" ? "TJ" : "EN";
+      i18n.changeLanguage(nextLang.toLowerCase());
+      return nextLang;
+    });
   };
 
   const handleLogout = () => {
@@ -105,7 +119,7 @@ export default function Header() {
         </button>
 
         <Link to="/" className="text-black dark:text-white font-bold text-xl tracking-tight absolute left-1/2 -translate-x-1/2">
-          Exclusive
+          {t("text216")}
         </Link>
 
         <div className="flex items-center gap-3">
@@ -128,19 +142,19 @@ export default function Header() {
                       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                       <circle cx="12" cy="7" r="4" />
                     </svg>
-                    Account
+                    {t("text6")}
                   </Link>
                   <Link to="/orders" onClick={() => setIsMobileUserMenuOpen(false)} className="flex items-center gap-3 text-sm font-normal hover:text-zinc-300 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                       <path d="M4 4h16v4H4V4zm0 4h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8zm6 4h4v2h-4v-2z" />
                     </svg>
-                    My Order
+                    {t("text7")}
                   </Link>
                   <Link to="/wishlist" onClick={() => setIsMobileUserMenuOpen(false)} className="flex items-center gap-3 text-sm font-normal hover:text-zinc-300 transition-colors relative">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                       <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                     </svg>
-                    <span>Wishlist</span>
+                    <span>{t("text50")}</span>
                     {wishlistCount > 0 && (
                       <span className="absolute left-3 top-[-4px] bg-red-500 text-white text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">
                         {wishlistCount}
@@ -153,7 +167,7 @@ export default function Header() {
                       <polyline points="16 17 21 12 16 7" />
                       <line x1="21" y1="12" x2="9" y2="12" />
                     </svg>
-                    Logout
+                    {t("text8")}
                   </button>
                 </div>
               )}
@@ -180,12 +194,12 @@ export default function Header() {
         </div>
 
         <nav className="flex items-center gap-10 text-base font-medium text-black dark:text-white">
-          <Link to="/" className={`relative py-1 transition-all ${isActive("/") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>Home</Link>
-          <Link to="/Contact" className={`relative py-1 transition-all ${isActive("/Contact") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>Contact</Link>
-          <Link to="/About" className={`relative py-1 transition-all ${isActive("/About") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>About</Link>
-          
+          <Link to="/" className={`relative py-1 transition-all ${isActive("/") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>{t("text1")}</Link>
+          <Link to="/Contact" className={`relative py-1 transition-all ${isActive("/Contact") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>{t("text2")}</Link>
+          <Link to="/About" className={`relative py-1 transition-all ${isActive("/About") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>{t("text3")}</Link>
+
           {!isAuthenticated && (
-            <Link to="/SignUp" className={`relative py-1 transition-all ${isActive("/SignUp") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>Sign Up</Link>
+            <Link to="/SignUp" className={`relative py-1 transition-all ${isActive("/SignUp") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>{t("text4")}</Link>
           )}
         </nav>
 
@@ -193,7 +207,7 @@ export default function Header() {
           <div className="relative w-[240px]">
             <input
               type="text"
-              placeholder="What are you looking for?"
+              placeholder={t("text5")}
               className="w-full bg-zinc-100 dark:bg-zinc-900 text-xs py-2.5 pl-5 pr-10 rounded-full text-black dark:text-white focus:outline-none placeholder:text-zinc-400 border border-transparent focus:border-zinc-200 dark:focus:border-zinc-800 transition-all"
             />
             <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -267,13 +281,13 @@ export default function Header() {
                       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                       <circle cx="12" cy="7" r="4" />
                     </svg>
-                    Account
+                    {t("text6")}
                   </Link>
                   <Link to="/orders" onClick={() => setIsUserMenuOpen(false)} className="flex items-center gap-3 text-sm font-normal hover:text-zinc-300 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                       <path d="M4 4h16v4H4V4zm0 4h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8zm6 4h4v2h-4v-2z" />
                     </svg>
-                    My Order
+                    {t("text7")}
                   </Link>
                   <button onClick={handleLogout} className="flex items-center gap-3 text-sm font-normal hover:text-zinc-300 transition-colors w-full text-left pt-1 border-t border-white/10">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -281,7 +295,7 @@ export default function Header() {
                       <polyline points="16 17 21 12 16 7" />
                       <line x1="21" y1="12" x2="9" y2="12" />
                     </svg>
-                    Logout
+                    {t("text8")}
                   </button>
                 </div>
               )}
@@ -298,7 +312,9 @@ export default function Header() {
       <div className={`fixed top-0 left-0 bottom-0 w-[80%] max-w-[280px] bg-white dark:bg-zinc-900 z-50 p-5 flex flex-col justify-between rounded-r-2xl shadow-2xl transform transition-transform duration-300 ease-out md:hidden ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div>
           <div className="flex items-center justify-between pb-4 border-b border-zinc-100 dark:border-zinc-800">
-            <span className="text-black dark:text-white font-bold text-lg tracking-tight">Menu</span>
+            <div>
+              <img className="w-[150px]" src={isDark ? i2 : i1} alt="" />
+            </div>
             <button onClick={() => setIsMobileMenuOpen(false)} className="text-zinc-400 p-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
@@ -307,28 +323,28 @@ export default function Header() {
           </div>
 
           <nav className="flex flex-col gap-1 mt-4">
-            <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">Home</Link>
-            <Link to="/Contact" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">Contact</Link>
-            <Link to="/About" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">About</Link>
-            
+            <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">{t("text1")}</Link>
+            <Link to="/Contact" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">{t("text2")}</Link>
+            <Link to="/About" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">{t("text3")}</Link>
+
             {!isAuthenticated && (
-              <Link to="/SignUp" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">Sign Up</Link>
+              <Link to="/SignUp" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">{t("text4")}</Link>
             )}
           </nav>
         </div>
 
         <div className="flex flex-col gap-3 pt-4 border-t border-zinc-100 dark:border-zinc-800">
           <button onClick={toggleTheme} className="flex items-center gap-2 w-full justify-center h-10 border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 rounded-xl text-sm font-semibold text-zinc-800 dark:text-white">
-            {isDark ? <span>Light Mode</span> : <span>Dark Mode</span>}
+            {isDark ? <span>{t("text212")}</span> : <span>{t("text213")}</span>}
           </button>
 
           <button onClick={toggleLanguage} className="flex items-center gap-2 w-full justify-center h-10 border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 rounded-xl text-sm font-semibold text-zinc-800 dark:text-white">
-            <span>Language: {lang}</span>
+            <span>{t("text214")}: {lang}</span>
           </button>
-          
+
           {!isAuthenticated && (
             <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)} className="w-full bg-zinc-900 dark:bg-white text-white dark:text-black text-center font-medium py-3 rounded-xl shadow-sm block text-sm">
-              Login Account
+              {t("text215")}
             </Link>
           )}
         </div>

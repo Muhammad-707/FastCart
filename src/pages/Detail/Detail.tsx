@@ -5,8 +5,11 @@ import { fetchProducts, setCurrentProduct } from '@/reducers/ProductSlice';
 import { addToCart } from '@/reducers/CartSlice';
 import { Minus, Plus, Heart, Truck, RotateCcw, Star } from 'lucide-react';
 import Related from './Related';
+import { useTranslation } from "react-i18next";
+
 
 export default function Detail() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -119,7 +122,7 @@ export default function Detail() {
 
       <div className="max-w-[1400px] mx-auto pt-10 pb-10 px-4 text-sm text-zinc-400">
         <div className="flex items-center gap-2 tracking-wide">
-          <Link to="/account" className="hover:text-black dark:hover:text-white transition-colors">Account</Link>
+          <Link to="/account" className="hover:text-black dark:hover:text-white transition-colors">{t("text6")}</Link>
           <span>/</span>
           <Link to="/gaming" className="hover:text-black dark:hover:text-white transition-colors">{product.categoryName || 'Category'}</Link>
           <span>/</span>
@@ -180,7 +183,7 @@ export default function Detail() {
           </p>
 
           <div className="flex items-center gap-4 mb-6">
-            <span className="text-lg tracking-wide font-normal text-black dark:text-white">Colours:</span>
+            <span className="text-lg tracking-wide font-normal text-black dark:text-white">{t("text118")}:</span>
             <div className="flex items-center gap-2">
               <button onClick={() => setSelectedColor(0)} className={`w-5 h-5 rounded-full bg-[#A0BCE0] transition-transform ${selectedColor === 0 ? 'ring-2 ring-black dark:ring-white ring-offset-2 dark:ring-offset-black' : 'hover:scale-110'}`} />
               <button onClick={() => setSelectedColor(1)} className={`w-5 h-5 rounded-full bg-[#E07575] transition-transform ${selectedColor === 1 ? 'ring-2 ring-black dark:ring-white ring-offset-2 dark:ring-offset-black' : 'hover:scale-110'}`} />
@@ -188,7 +191,7 @@ export default function Detail() {
           </div>
 
           <div className="flex items-center gap-4 mb-6">
-            <span className="text-lg tracking-wide font-normal text-black dark:text-white min-w-[60px]">Size:</span>
+            <span className="text-lg tracking-wide font-normal text-black dark:text-white min-w-[60px]">{t("text119")}:</span>
             <div className="flex items-center gap-2.5">
               {availableSizes.map((size) => {
                 const isSelected = selectedSize === size;
@@ -220,15 +223,15 @@ export default function Detail() {
             <div className="p-4 flex items-center gap-4 border-b border-zinc-400 dark:border-zinc-600">
               <Truck size={28} className="text-black dark:text-white" />
               <div className="flex flex-col gap-1">
-                <span className="text-base font-medium text-black dark:text-white">Free Delivery</span>
-                <span className="text-xs text-black dark:text-zinc-400 underline cursor-pointer">Enter your postal code</span>
+                <span className="text-base font-medium text-black dark:text-white">{t("text121")}</span>
+                <span className="text-xs text-black dark:text-zinc-400 underline cursor-pointer">{t("text122")}</span>
               </div>
             </div>
             <div className="p-4 flex items-center gap-4">
               <RotateCcw size={28} className="text-black dark:text-white" />
               <div className="flex flex-col gap-1">
-                <span className="text-base font-medium text-black dark:text-white">Return Delivery</span>
-                <span className="text-xs text-black dark:text-zinc-400">Free 30 Days Delivery Returns.</span>
+                <span className="text-base font-medium text-black dark:text-white">{t("text123")}</span>
+                <span className="text-xs text-black dark:text-zinc-400">{t("text124")}</span>
               </div>
             </div>
           </div>

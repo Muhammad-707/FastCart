@@ -1,12 +1,15 @@
 import Card1 from './Card1';
 import { Store, CircleDollarSign, Package, HandCoins } from 'lucide-react'; 
+import { useTranslation } from "react-i18next";
+
 
 export default function Section2() {
+  const { t } = useTranslation();
   const stats = [
-    { icon: <Store size={30} />, value: "10.5k", label: "Sallers active our site" },
-    { icon: <CircleDollarSign size={30} />, value: "33k", label: "Mopnthly Product Sale" },
-    { icon: <Package size={30} />, value: "45.5k", label: "Customer active in our site" },
-    { icon: <HandCoins size={30} />, value: "25k", label: "Anual gross sale in our site" },
+    { icon: <Store size={30} />, value: "10.5k", label: `${t("text169")}` },
+    { icon: <CircleDollarSign size={30} />, value: "33k", label: `${t("text170")}` },
+    { icon: <Package size={30} />, value: "45.5k", label: `${t("text171")}` },
+    { icon: <HandCoins size={30} />, value: "25k", label: `${t("text172")}` },
   ];
 
   return (

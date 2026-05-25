@@ -13,6 +13,7 @@ import {
   type FilterState
 } from '../../reducers/FilterSlice';
 import { ChevronUp, Star } from 'lucide-react';
+import { useTranslation } from "react-i18next";
 
 interface Category {
   id: number;
@@ -29,6 +30,7 @@ const ratingsList = [5, 4, 3, 2];
 const SLIDER_MAX = 10000;
 
 export default function Sidebar() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const filters = useSelector((state: RootState) => state.filters) as FilterState;
   const [searchParams, setSearchParams] = useSearchParams();
@@ -111,19 +113,19 @@ export default function Sidebar() {
     <div className="w-full bg-white dark:bg-zinc-900 p-2 flex flex-col font-sans text-black dark:text-zinc-100 transition-colors duration-200">
       <div>
         <div className="flex items-center justify-between py-2 text-base font-medium border-b border-gray-100 dark:border-zinc-800 mb-4">
-          <span>Filters</span>
+          <span>{t("text197")}</span>
           <button
             onClick={handleResetAll}
             className="text-xs text-gray-400 dark:text-zinc-500 hover:text-[#DB4444] transition-colors"
           >
-            Reset All
+            {t("text198")}
           </button>
         </div>
       </div>
 
       <div className="mb-6">
         <div className="flex items-center justify-between text-sm font-semibold mb-3 cursor-pointer">
-          <span>Category</span>
+          <span>{t("text199")}</span>
           <ChevronUp size={16} className="text-gray-400" />
         </div>
         <ul className="space-y-2.5 text-sm">
@@ -131,7 +133,7 @@ export default function Sidebar() {
             onClick={() => handleCategorySelect(null)}
             className={`cursor-pointer transition-colors ${!filters.categoryId ? 'text-[#DB4444] font-medium' : 'text-gray-600 dark:text-zinc-400 hover:text-black dark:hover:text-white'}`}
           >
-            All products
+            {t("text200")}
           </li>
           {categories.map((cat) => (
             <li
@@ -149,7 +151,7 @@ export default function Sidebar() {
 
       <div className="mb-6">
         <div className="flex items-center justify-between text-sm font-semibold mb-3 cursor-pointer">
-          <span>Brands</span>
+          <span>{t("text201")}</span>
           <ChevronUp size={16} className="text-gray-400" />
         </div>
         <ul className="space-y-2.5">
@@ -163,7 +165,7 @@ export default function Sidebar() {
               className="w-4 h-4 border-gray-300 dark:border-zinc-700 text-[#DB4444] focus:ring-[#DB4444] accent-[#DB4444] bg-transparent cursor-pointer"
             />
             <label htmlFor="brand-all" className="text-gray-600 dark:text-zinc-400 cursor-pointer select-none flex-1 hover:text-black dark:hover:text-white">
-              All Brands
+              {t("text202")}
             </label>
           </li>
           {brands.map((brand) => (
@@ -188,7 +190,7 @@ export default function Sidebar() {
 
       <div className="mb-6">
         <div className="flex items-center justify-between text-sm font-semibold mb-4 cursor-pointer">
-          <span>Price range</span>
+          <span>{t("text209")}</span>
           <ChevronUp size={16} className="text-gray-400" />
         </div>
         
@@ -243,7 +245,7 @@ export default function Sidebar() {
           onClick={handleApplyPrice}
           className="w-full py-2 border border-[#DB4444] text-[#DB4444] rounded text-sm font-medium hover:bg-[#DB4444] hover:text-white transition-all bg-transparent"
         >
-          Apply
+          {t("text210")}
         </button>
       </div>
 
@@ -251,7 +253,7 @@ export default function Sidebar() {
 
       <div className="mb-6">
         <div className="flex items-center justify-between text-sm font-semibold mb-3 cursor-pointer">
-          <span>Condition</span>
+          <span>{t("text203")}</span>
           <ChevronUp size={16} className="text-gray-400" />
         </div>
         <ul className="space-y-2.5">
@@ -277,7 +279,7 @@ export default function Sidebar() {
 
       <div className="mb-2">
         <div className="flex items-center justify-between text-sm font-semibold mb-3 cursor-pointer">
-          <span>Ratings</span>
+          <span>{t("text207")}</span>
           <ChevronUp size={16} className="text-gray-400" />
         </div>
         <ul className="space-y-2.5">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Truck, Headphones, ShieldCheck } from 'lucide-react';
+import { useTranslation } from "react-i18next";
 
 interface ServiceCardProps {
   icon: React.ReactNode;
@@ -24,26 +25,28 @@ const ServiceCard = ({ icon, title, description }: ServiceCardProps) => (
 );
 
 export default function ServicesSection() {
+    const { t } = useTranslation();
+
   return (
     <section className="w-full py-24 bg-white dark:bg-zinc-950 transition-colors duration-300">
       <div className="max-w-[1200px] mx-auto px-6 grid md:grid-cols-3 gap-12">
         
         <ServiceCard 
           icon={<Truck size={30} strokeWidth={2} />}
-          title="FREE AND FAST DELIVERY"
-          description="Free delivery for all orders over $140"
+          title={t("text179")}
+          description={t("text180")}
         />
 
         <ServiceCard 
           icon={<Headphones size={30} strokeWidth={2} />}
-          title="24/7 CUSTOMER SERVICE"
-          description="Friendly 24/7 customer support"
+          title={t("text181")}
+          description={t("text182")}
         />
 
         <ServiceCard 
           icon={<ShieldCheck size={30} strokeWidth={2} />}
-          title="MONEY BACK GUARANTEE"
-          description="We return money within 30 days"
+          title={t("text183")}
+          description={t("text184")}
         />
 
       </div>

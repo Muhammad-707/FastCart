@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [errorModal, setErrorModal] = useState({ isOpen: false, message: "" });
@@ -11,8 +13,8 @@ export default function Login() {
   const formik = useFormik({
     initialValues: { userName: "", password: "" },
     validationSchema: Yup.object({
-      userName: Yup.string().required("Username or E-mail is required"),
-      password: Yup.string().required("Password is required"),
+      userName: Yup.string().required(`${t("text35a")}`),
+      password: Yup.string().required(`${t("text35b")}`),
     }),
     onSubmit: async (values) => {
       try {
@@ -29,16 +31,16 @@ export default function Login() {
 
         const textResult = await response.text();
         let token = "";
-        let errorMessage = "Invalid credentials. Please check your username and password.";
+        let errorMessage = `${t("text34")}`;
 
         if (response.ok || response.status === 200) {
           try {
             const jsonResult = JSON.parse(textResult);
             token = jsonResult.token || jsonResult.jwt || jsonResult.accessToken || textResult;
-            
+
             localStorage.setItem("userData", JSON.stringify({
               userName: jsonResult.userName || values.userName,
-              password: values.password, 
+              password: values.password,
               email: jsonResult.email || "Не указано",
               phoneNumber: jsonResult.phoneNumber || "Не указано"
             }));
@@ -80,10 +82,10 @@ export default function Login() {
       <div className="min-h-screen w-full flex items-center justify-center mt-[-60px] mb-[-25px] dark:bg-zinc-950 px-4 font-sans antialiased transition-colors duration-300 selection:bg-red-500/10 selection:text-[#DB4444]">
         <div className="w-full max-w-[400px] flex flex-col text-left my-10 bg-transparent transition-all">
           <h1 className="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 mb-2">
-            Log in to Exclusive
+            {t("text25")}
           </h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-8 font-normal">
-            Enter your details below
+            {t("text26")}
           </p>
           <form className="flex flex-col w-full gap-5" onSubmit={formik.handleSubmit}>
             <div className="relative w-full">
@@ -101,7 +103,7 @@ export default function Login() {
                   } rounded-lg py-3.5 px-4 text-sm text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-4 transition-all duration-200 relative z-0`}
               />
               <label htmlFor="login-username" className="absolute left-3 bg-zinc-50 dark:bg-zinc-950 peer-focus:bg-zinc-50 dark:peer-focus:bg-zinc-950 px-1.5 transition-all duration-200 pointer-events-none z-10 -top-2 text-xs text-zinc-400 dark:text-zinc-500 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-zinc-400 dark:peer-placeholder-shown:text-zinc-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-zinc-500 dark:peer-focus:text-zinc-400">
-                Email or phone number
+                {t("text27")}
               </label>
               {formik.touched.userName && formik.errors.userName && (
                 <p className="text-red-500 dark:text-red-400 text-xs mt-1.5 font-medium">{formik.errors.userName}</p>
@@ -122,7 +124,7 @@ export default function Login() {
                   } rounded-lg py-3.5 pl-4 pr-12 text-sm text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-4 transition-all duration-200 relative z-0`}
               />
               <label htmlFor="login-password" className="absolute left-3 bg-zinc-50 dark:bg-zinc-950 peer-focus:bg-zinc-50 dark:peer-focus:bg-zinc-950 px-1.5 transition-all duration-200 pointer-events-none z-10 -top-2 text-xs text-zinc-400 dark:text-zinc-500 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-zinc-400 dark:peer-placeholder-shown:text-zinc-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-zinc-500 dark:peer-focus:text-zinc-400">
-                Password
+                {t("text28")}
               </label>
 
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 z-10 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus:outline-none">
@@ -136,11 +138,11 @@ export default function Login() {
             </div>
             <div className="flex justify-end -mt-1">
               <button type="button" className="text-[#DB4444] dark:text-red-400 hover:underline text-sm font-medium transition-all focus:outline-none">
-                Forget Password?
+                {t("text29")}
               </button>
             </div>
             <button type="submit" className="w-full bg-[#DB4444] hover:bg-[#c23b3b] dark:bg-red-600 dark:hover:bg-red-700 text-white font-medium py-3.5 rounded-lg text-sm shadow-sm hover:shadow-md hover:shadow-red-500/10 active:scale-[0.98] transition-all duration-200 mt-1">
-              Log In
+              {t("text30")}
             </button>
             <button
               type="button"
@@ -152,13 +154,13 @@ export default function Login() {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05" />
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
               </svg>
-              <span>Sign in with Google</span>
+              <span>{t("text17")}</span>
             </button>
           </form>
           <div className="mt-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
-            Don't have an account?{" "}
+            {t("text30a")}{" "}
             <Link to="/SignUp" className="text-zinc-900 dark:text-zinc-50 font-medium underline underline-offset-4 hover:text-[#DB4444] dark:hover:text-red-400 transition-colors ml-1">
-              Sign up
+              {t("text30b")}
             </Link>
           </div>
         </div>
@@ -171,10 +173,10 @@ export default function Login() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </div>
-            <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-1.5">Login Failed</h3>
+            <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-1.5">{t("text33")}</h3>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-5 leading-normal px-2">{errorModal.message}</p>
             <button onClick={() => setErrorModal({ isOpen: false, message: "" })} className="w-full bg-[#DB4444] hover:bg-[#c23b3b] dark:bg-red-600 dark:hover:bg-red-700 text-white font-medium py-2.5 rounded-lg text-sm shadow-sm transition-colors duration-200">
-              Try Again
+              {t("text35")}
             </button>
           </div>
         </div>
