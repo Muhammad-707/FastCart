@@ -12,7 +12,6 @@ import {
   Account, Product, Cart, Wishlist, Detail, Checkout 
 } from "./router/router";
 
-// --- Компоненты защиты (без JSX) ---
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
   return isAuthenticated 
@@ -27,13 +26,11 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
     : React.createElement(Navigate, { to: "/", replace: true });
 };
 
-// Функция-помощник для обертки в Suspense без JSX
 const wrapSuspense = (Component: React.ComponentType) => 
   React.createElement(Suspense, { fallback: React.createElement(Loading) }, 
     React.createElement(Component)
   );
 
-// --- Конфигурация роутера (без JSX) ---
 const router = createBrowserRouter([
   {
     path: "/",
@@ -57,7 +54,6 @@ const router = createBrowserRouter([
   },
 ]);
 
-// --- Корневой компонент (без JSX) ---
 export default function App() {
   return React.createElement(ErrorBoundary, null,
     React.createElement(AuthProvider, null,

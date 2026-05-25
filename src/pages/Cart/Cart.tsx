@@ -22,31 +22,39 @@ export default function Cart() {
         <span className="text-right">Subtotal</span>
       </div>
       <div className="flex flex-col gap-6 mb-6">
-        {items.map((item) => (
-          <div key={item.id} className="group grid grid-cols-4 gap-8 items-center px-10 py-6 bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-sm shadow-[0_1px_13px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-all duration-300">
-            <div className="flex items-center gap-5">
-              <img src={item.image} alt={item.name} className="w-16 h-16 object-contain" />
-              <span className="font-medium">{item.name}</span>
+        {items.map((item) => {
+          const imageUrl = item.image?.startsWith('http') 
+            ? item.image 
+            : item.image 
+              ? `https://fastcard-1-o23z.onrender.com/images/${item.image.replace(/^\/+/, '')}`
+              : '/placeholder.png';
+
+          return (
+            <div key={item.id} className="group grid grid-cols-4 gap-8 items-center px-10 py-6 bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-sm shadow-[0_1px_13px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-all duration-300">
+              <div className="flex items-center gap-5">
+                <img src={imageUrl} alt={item.name} className="w-16 h-16 object-contain" />
+                <span className="font-medium">{item.name}</span>
+              </div>
+              <span className="text-center">${item.price}</span>
+              <div className="flex justify-center">
+                <input 
+                  type="number" min="1" value={item.quantity}
+                  onChange={(e) => dispatch(updateQuantity({ id: item.id, quantity: parseInt(e.target.value) || 1 }))}
+                  className="w-16 p-2 border border-zinc-300 dark:border-zinc-700 bg-transparent rounded-sm text-center"
+                />
+              </div>
+              <div className="flex items-center justify-end gap-6">
+                <span>${(item.price * item.quantity)}</span>
+                <button 
+                  onClick={() => dispatch(removeFromCart(item.id))} 
+                  className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                >
+                  <X size={20} />
+                </button>
+              </div>
             </div>
-            <span className="text-center">${item.price}</span>
-            <div className="flex justify-center">
-              <input 
-                type="number" min="1" value={item.quantity}
-                onChange={(e) => dispatch(updateQuantity({ id: item.id, quantity: parseInt(e.target.value) || 1 }))}
-                className="w-16 p-2 border border-zinc-300 dark:border-zinc-700 bg-transparent rounded-sm text-center"
-              />
-            </div>
-            <div className="flex items-center justify-end gap-6">
-              <span>${(item.price * item.quantity)}</span>
-              <button 
-                onClick={() => dispatch(removeFromCart(item.id))} 
-                className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              >
-                <X size={20} />
-              </button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="flex flex-col md:flex-row justify-between gap-10 mt-10">

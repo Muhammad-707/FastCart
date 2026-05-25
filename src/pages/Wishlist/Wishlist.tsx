@@ -5,7 +5,6 @@ import { useWishlist } from "@/pages/Wishlist/WishlistContext";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
-// Импорт экшена (убедитесь, что имя функции совпадает с экспортом из ProductSlice)
 import { fetchProducts } from "@/reducers/ProductSlice"; 
 import type { RootState, AppDispatch } from "@/store/store";
 
@@ -32,8 +31,6 @@ export default function Wishlist() {
         };
     }, [wishlist]);
 
-    // ИСПРАВЛЕНО: Типизация селектора
-    // Убедитесь, что state.products существует в вашем RootState
     const { items, products, loading, isLoading } = useSelector((state: RootState) => state.products);
 
     const recommendedProducts = Array.isArray(items)
@@ -45,13 +42,11 @@ export default function Wishlist() {
     const isDataLoading = loading || isLoading;
 
     useEffect(() => {
-        // Вызываем экшен для загрузки товаров
         dispatch(fetchProducts({}));
     }, [dispatch]);
 
     return (
         <div className="max-w-[1440px] mx-auto px-4 md:px-20 pt-10 pb-20 font-sans">
-            {/* СЕКЦИЯ WISHLIST */}
             <div className="flex justify-between items-center mb-10">
                 <h2 className="text-xl font-normal text-black dark:text-white tracking-wide">
                     Wishlist ({localWishlist.length})
@@ -78,7 +73,6 @@ export default function Wishlist() {
                 </div>
             </div>
 
-            {/* СЕКЦИЯ JUST FOR YOU */}
             <div className="flex justify-between items-center mb-10">
                 <div className="flex items-center gap-4">
                     <div className="w-5 h-10 bg-[#DB4444] rounded-[4px]"></div>

@@ -7,11 +7,10 @@ export default function Checkout() {
   const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
-    <div className="max-w-[1300px] mx-auto px-6 pt-10 pb-20 font-sans  dark:text-white transition-colors duration-300">
+    <div className="max-w-[1400px] mx-auto px-6 pt-10 pb-20 font-sans  dark:text-white transition-colors duration-300">
       
-      {/* НАВИГАЦИЯ */}
       <nav className="mb-20 text-sm text-zinc-400">
-        <Link to="/" className="hover:text-black dark:hover:text-zinc-200">Account</Link> / 
+        <Link to="/account" className="hover:text-black dark:hover:text-zinc-200">Account</Link> / 
         <Link to="/cart" className="hover:text-black dark:hover:text-zinc-200"> My Cart</Link> / 
         <span className="text-black dark:text-white font-medium"> CheckOut</span>
       </nav>
@@ -20,7 +19,6 @@ export default function Checkout() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[150px] items-start">
         
-        {/* ЛЕВАЯ ЧАСТЬ: ФОРМА */}
         <div className="bg-white lg:w-[500px] dark:bg-zinc-900 p-8 rounded shadow-lg border border-zinc-100 dark:border-zinc-800 transition-colors">
           <div className="flex flex-col gap-6">
             {[
@@ -46,18 +44,25 @@ export default function Checkout() {
           </div>
         </div>
 
-        {/* ПРАВАЯ ЧАСТЬ: ИТОГИ */}
         <div className="flex flex-col gap-8 w-full lg:max-w-[470px]">
           <div className="flex flex-col gap-6">
-            {items.map((item) => (
-              <div key={item.id} className="flex justify-between items-center">
-                <div className="flex items-center gap-4">
-                  <img src={item.image} alt={item.name} className="w-12 h-12 object-contain" />
-                  <span className="text-sm">{item.name}</span>
+            {items.map((item) => {
+              const imageUrl = item.image?.startsWith('http') 
+                ? item.image 
+                : item.image 
+                  ? `https://fastcard-1-o23z.onrender.com/images/${item.image.replace(/^\/+/, '')}`
+                  : '/placeholder.png';
+
+              return (
+                <div key={item.id} className="flex justify-between items-center">
+                  <div className="flex items-center gap-4">
+                    <img src={imageUrl} alt={item.name} className="w-12 h-12 object-contain" />
+                    <span className="text-sm">{item.name}</span>
+                  </div>
+                  <span className="text-sm">${(item.price * item.quantity).toFixed(2)}</span>
                 </div>
-                <span className="text-sm">${(item.price * item.quantity).toFixed(2)}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="space-y-4 pt-6 border-t border-zinc-200 dark:border-zinc-800">
@@ -71,7 +76,6 @@ export default function Checkout() {
               <div className="flex items-center gap-3 font-medium">
                 <input type="radio" name="pay" className="w-5 h-5 accent-black dark:accent-white" /> Bank
               </div>
-              {/* ЧЕТЫРЕ ИКОНКИ ПЛАТЕЖНЫХ СИСТЕМ */}
               <div className="flex gap-2">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" className="w-8 h-5 object-contain" />
                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="Mastercard" className="w-8 h-5 object-contain" />

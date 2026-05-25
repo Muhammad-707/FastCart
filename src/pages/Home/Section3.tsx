@@ -3,27 +3,34 @@ import { useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { 
-  Smartphone, Monitor, Watch, Camera, Headset, Gamepad2, 
-  LayoutGrid, ArrowLeft, ArrowRight 
+  Smartphone, Monitor, Watch, Camera, Headphones, Gamepad2, 
+  ArrowLeft, ArrowRight, Shirt, Home, Dumbbell, Cpu, Package 
 } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Card4 } from './Card4'; 
 import type { RootState } from '@/store/store';
 
-// Карта иконок: ключи должны точно совпадать с названиями категорий из API
-const iconMap: Record<string, React.ReactNode> = {
-  "Phones": <Smartphone size={40} />,
-  "Computers": <Monitor size={40} />,
-  "SmartWatch": <Watch size={40} />,
-  "Camera": <Camera size={40} />,
-  "HeadPhones": <Headset size={40} />,
-  "Gaming": <Gamepad2 size={40} />,
+const getCategoryIcon = (name: string) => {
+  const key = String(name || '').toLowerCase().trim();
+  
+  if (key.includes('phone') || key.includes('mobile')) return <Smartphone size={40} />;
+  if (key.includes('computer') || key.includes('laptop') || key.includes('pc')) return <Monitor size={40} />;
+  if (key.includes('watch')) return <Watch size={40} />;
+  if (key.includes('camera')) return <Camera size={40} />;
+  if (key.includes('head') || key.includes('audio')) return <Headphones size={40} />;
+  if (key.includes('gam') || key.includes('toy')) return <Gamepad2 size={40} />;
+  if (key.includes('fashion') || key.includes('cloth') || key.includes('wear')) return <Shirt size={40} />;
+  if (key.includes('home') || key.includes('garden')) return <Home size={40} />;
+  if (key.includes('sport') || key.includes('outdoor') || key.includes('fitness')) return <Dumbbell size={40} />;
+  if (key.includes('electronic')) return <Cpu size={40} />;
+  
+  return <Package size={40} />;
 };
 
 export default function Section3() {
   const { items } = useSelector((state: RootState) => state.categories);
-  const [active, setActive] = useState('Camera');
+  const [active, setActive] = useState('');
 
   return (
     <section className="max-w-[1400px] mx-auto px-6 py-20 border-b border-zinc-200 dark:border-zinc-800">
@@ -36,10 +43,10 @@ export default function Section3() {
           <h2 className="text-3xl font-semibold tracking-wide dark:text-white">Browse By Category</h2>
         </div>
         <div className="flex gap-2">
-          <button className="cat-prev p-3 bg-zinc-100 rounded-full hover:bg-zinc-200 transition-colors">
+          <button className="cat-prev p-3 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors dark:text-white">
             <ArrowLeft size={20} />
           </button>
-          <button className="cat-next p-3 bg-zinc-100 rounded-full hover:bg-zinc-200 transition-colors">
+          <button className="cat-next p-3 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors dark:text-white">
             <ArrowRight size={20} />
           </button>
         </div>
@@ -54,8 +61,8 @@ export default function Section3() {
         {Array.isArray(items) && items.map((cat: any) => (
           <SwiperSlide key={cat.id}>
             <Card4 
-              // Выбираем иконку из карты или ставим дефолтную, если категории нет в списке
-              icon={iconMap[cat.categoryName] || <LayoutGrid size={40} />} 
+              id={cat.id} 
+              icon={getCategoryIcon(cat.categoryName)} 
               label={cat.categoryName} 
               isActive={active === cat.categoryName} 
               onClick={() => setActive(cat.categoryName)} 

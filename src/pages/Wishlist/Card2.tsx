@@ -6,14 +6,19 @@ export default function Card2({ product }: any) {
   const dispatch = useDispatch();
   if (!product) return null;
 
-  // Автоматический маппинг
   const title = product.title || product.name || "Product Title";
-  const image = product.image || product.img || product.thumbnail || product.images?.[0];
+  const rawImage = product.image || product.img || product.thumbnail || product.images?.[0];
   const price = product.price || 0;
   const oldPrice = product.oldPrice || product.old_price;
   const rating = product.rating || 5;
   const reviewsCount = product.reviewsCount || product.reviews_count || product.reviews || 0;
   const productId = product.id || product._id || product.title;
+
+  const imageUrl = rawImage?.startsWith('http') 
+    ? rawImage 
+    : rawImage 
+      ? `https://fastcard-1-o23z.onrender.com/images/${rawImage.replace(/^\/+/, '')}`
+      : '/placeholder.png';
 
   const hasDiscount = oldPrice && oldPrice > price;
   const discountPercent = hasDiscount ? Math.round(((oldPrice - price) / oldPrice) * 100) : null;
@@ -28,7 +33,7 @@ export default function Card2({ product }: any) {
     const productToAdd = {
       id: String(productId),
       name: title,
-      image: image,
+      image: imageUrl,
       price: cleanPrice || 0,
       quantity: 1
     };
@@ -68,9 +73,9 @@ export default function Card2({ product }: any) {
           <Eye size={20} />
         </button>
         
-        {image ? (
+        {rawImage ? (
           <img 
-            src={image} 
+            src={imageUrl} 
             alt={title} 
             className="h-[150px] max-w-[80%] object-contain transition-transform duration-300 group-hover:scale-105" 
           />

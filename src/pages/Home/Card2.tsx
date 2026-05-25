@@ -4,11 +4,15 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '@/reducers/CartSlice';
 
-export default function Card2({ discount, image, title, price, oldPrice, rating, id, _id }: any) {
+export default function Card2({ discount, image, title, price, oldPrice, rating, id, _id, quantity }: any) {
   const productId = id || _id || title;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
+
+  const imageUrl = image?.startsWith('http') 
+    ? image 
+    : `https://fastcard-1-o23z.onrender.com/images/${image?.replace(/^\/+/, '')}`;
 
   useEffect(() => {
     const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
@@ -26,7 +30,7 @@ export default function Card2({ discount, image, title, price, oldPrice, rating,
       updatedWishlist.splice(itemIndex, 1);
       setIsLiked(false);
     } else {
-      const newProduct = { id: productId, _id: productId, discount, image, title, price, oldPrice, rating };
+      const newProduct = { id: productId, _id: productId, discount, image, title, price, oldPrice, rating, quantity };
       updatedWishlist.push(newProduct);
       setIsLiked(true);
     }
@@ -64,12 +68,11 @@ export default function Card2({ discount, image, title, price, oldPrice, rating,
           </div>
         </div>
 
-        <img src={image} alt={title} className="h-[150px] object-contain" />
+        <img src={imageUrl} alt={title} className="h-[150px] object-contain" />
 
         <button 
           onClick={handleAddToCart}
-          className="absolute bottom-0 w-full bg-black dark:bg-white text-white dark:text-black py-2.5 font-medium opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-in-out"
-        >
+          className="absolute bottom-0 w-full bg-black dark:bg-white text-white dark:text-black py-2.5 font-medium opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-in-out">
           Add To Cart
         </button>
       </div>
@@ -81,8 +84,8 @@ export default function Card2({ discount, image, title, price, oldPrice, rating,
           {oldPrice && <span className="text-zinc-500 dark:text-zinc-400 line-through font-medium">{oldPrice}</span>}
         </div>
         <div className="flex items-center gap-2">
-          <div className="text-yellow-400">{'★'.repeat(rating || 0)}</div>
-          <span className="text-zinc-500 dark:text-zinc-400 font-semibold text-sm">(88)</span>
+          <div className="text-yellow-400">{'★'.repeat(Math.round(rating || 0))}</div>
+          <span className="text-zinc-500 dark:text-zinc-400 font-semibold text-sm">({quantity ?? 0})</span>
         </div>
       </div>
     </div>

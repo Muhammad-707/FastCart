@@ -2,26 +2,22 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useSelector } from 'react-redux';
 import 'swiper/css';
 
-// Импортируй свой готовый компонент Card2
 import Card2 from '@/pages/Home/Card2'; 
 
 export default function RelatedItems() {
   const { items, currentProduct } = useSelector((state: any) => state.products);
 
-  // Фильтруем список, исключая текущий просматриваемый товар
   const relatedProducts = items.filter((p: any) => p.id !== currentProduct?.id);
 
   if (relatedProducts.length === 0) return null;
 
   return (
     <div className="max-w-[1400px] mx-auto px-4 py-16">
-      {/* Заголовок секции */}
       <div className="flex items-center gap-4 mb-10">
         <div className="w-5 h-10 bg-[#DB4444] rounded"></div>
         <h2 className="text-2xl font-semibold text-black dark:text-white">Related Items</h2>
       </div>
 
-      {/* Слайдер Swiper без стрелок */}
       <Swiper
         spaceBetween={30}
         slidesPerView={4}

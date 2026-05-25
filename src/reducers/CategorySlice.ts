@@ -7,17 +7,8 @@ export const getCategories = createAsyncThunk("categories/get", async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/Category/get-categories`);
     const result = response.data;
-    const items = Array.isArray(result) ? result : (result.data || []);
-
-    return items.map((item: any) => ({
-      ...item,
-      // Если картинки нет, оставляем null, в компоненте подставим иконку
-      categoryImage: item.categoryImage 
-        ? `${API_BASE_URL}/uploads/${item.categoryImage}` 
-        : null 
-    }));
+    return Array.isArray(result) ? result : (result.data || []);
   } catch (error) {
-    console.error("Ошибка загрузки категорий:", error);
     throw error;
   }
 });

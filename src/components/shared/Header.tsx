@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
 
 import i1 from "@/assets/Group 1116606595 (2).png";
+import i2 from "@/assets/Group 1116606595 (5).png";
 
 export default function Header() {
   const location = useLocation();
@@ -12,10 +13,8 @@ export default function Header() {
   const [isDark, setIsDark] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  // Добавлено состояние для скрытия Sign Up
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // РЕАКТИВНОСТЬ: useSelector подписывает компонент на изменения в Redux
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const cartCount = cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0);
 
@@ -27,7 +26,6 @@ export default function Header() {
   const userMenuRef = useRef<HTMLDivElement>(null);
   const mobileUserMenuRef = useRef<HTMLDivElement>(null);
 
-  // Проверяем авторизацию каждый раз при смене роута (чтобы скрылось резко при переходе на главную)
   useEffect(() => {
     const authStatus = localStorage.getItem("isAuthenticated") === "true";
     setIsAuthenticated(authStatus);
@@ -80,7 +78,7 @@ export default function Header() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated"); // Удаляем статус авторизации при выходе
+    localStorage.removeItem("isAuthenticated");
     setIsAuthenticated(false);
     setIsUserMenuOpen(false);
     setIsMobileUserMenuOpen(false);
@@ -178,7 +176,7 @@ export default function Header() {
 
       <div className="hidden md:flex max-w-[1400px] mx-auto h-20 px-6 items-center justify-between">
         <div>
-          <img src={i1} alt="" />
+          <img className="w-[200px]" src={isDark ? i2 : i1} alt="" />
         </div>
 
         <nav className="flex items-center gap-10 text-base font-medium text-black dark:text-white">
@@ -186,7 +184,6 @@ export default function Header() {
           <Link to="/Contact" className={`relative py-1 transition-all ${isActive("/Contact") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>Contact</Link>
           <Link to="/About" className={`relative py-1 transition-all ${isActive("/About") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>About</Link>
           
-          {/* Скрываем Sign Up если пользователь уже вошел */}
           {!isAuthenticated && (
             <Link to="/SignUp" className={`relative py-1 transition-all ${isActive("/SignUp") ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black dark:after:bg-white" : "hover:text-zinc-600 dark:hover:text-zinc-300"}`}>Sign Up</Link>
           )}
@@ -314,7 +311,6 @@ export default function Header() {
             <Link to="/Contact" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">Contact</Link>
             <Link to="/About" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">About</Link>
             
-            {/* Скрываем Sign Up и из мобильного меню тоже */}
             {!isAuthenticated && (
               <Link to="/SignUp" onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2.5 rounded-lg text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors">Sign Up</Link>
             )}
@@ -330,7 +326,6 @@ export default function Header() {
             <span>Language: {lang}</span>
           </button>
           
-          {/* Если не авторизован, показываем кнопку Login внизу мобильного меню */}
           {!isAuthenticated && (
             <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)} className="w-full bg-zinc-900 dark:bg-white text-white dark:text-black text-center font-medium py-3 rounded-xl shadow-sm block text-sm">
               Login Account

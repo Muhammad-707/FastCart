@@ -36,7 +36,7 @@ export default function Section4() {
               price={`$${product.hasDiscount ? product.discountPrice : product.price}`}
               oldPrice={product.hasDiscount ? `$${product.price}` : undefined}
               rating={product.rating || 5}
-              reviews={product.quantity || 0} // Используем quantity как количество отзывов, чтобы не было ошибки
+              reviews={product.quantity || 0} 
             />
           </SwiperSlide>
         ))}

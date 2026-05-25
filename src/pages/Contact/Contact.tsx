@@ -5,8 +5,6 @@ export default function ContactPage() {
   return (
     <div className="w-full pt-10 pb-15 bg-white dark:bg-zinc-950">
       <div className="max-w-[1400px] mx-auto px-6">
-        
-        {/* Навигационная цепочка */}
         <div className="flex items-center gap-2 text-sm text-zinc-500 mb-20">
           <Link to="/" className="hover:text-black dark:hover:text-white transition-colors">
             Home
@@ -14,11 +12,7 @@ export default function ContactPage() {
           <span>/</span>
           <span className="text-black dark:text-white">Contact</span>
         </div>
-
-        {/* Главная сетка: Левый блок (контакты) + Правый блок (форма) */}
         <div className="flex lg:flex-row flex-col gap-8">
-          
-          {/* Блок 1: Контакты */}
           <div className="p-8 shadow-lg rounded-md bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 h-fit">
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-4">
@@ -33,7 +27,7 @@ export default function ContactPage() {
                   <p>Phone: +8801611112222</p>
                 </div>
               </div>
-              
+
               <hr className="border-zinc-200 dark:border-zinc-700" />
 
               <div className="flex flex-col gap-4">
@@ -51,8 +45,6 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
-
-          {/* Блок 2: Форма */}
           <div className="p-8 shadow-lg rounded-md w-full bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800">
             <form className="flex flex-col gap-4">
               <div className="grid md:grid-cols-3 gap-4">
@@ -68,7 +60,6 @@ export default function ContactPage() {
               </div>
             </form>
           </div>
-
         </div>
       </div>
     </div>

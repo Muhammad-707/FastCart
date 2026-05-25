@@ -17,7 +17,6 @@ export default function Home() {
   const filters = useSelector((state: RootState) => state.filters);
 
   useEffect(() => {
-    // Pass the current filters to fetchProducts
     dispatch(fetchProducts(filters));
     dispatch(getCategories());
   }, [dispatch, filters]);

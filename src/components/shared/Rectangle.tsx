@@ -9,9 +9,7 @@ interface ServiceCardProps {
 
 const ServiceCard = ({ icon, title, description }: ServiceCardProps) => (
   <div className="flex flex-col items-center text-center">
-    {/* Внешний круг (серый в светлой теме, темно-серый в темной) */}
     <div className="w-20 h-20 flex items-center justify-center rounded-full bg-zinc-200 dark:bg-zinc-800 mb-6 transition-colors duration-300">
-      {/* Внутренний круг (черный в светлой, белый в темной) */}
       <div className="w-14 h-14 rounded-full bg-black dark:bg-white flex items-center justify-center text-white dark:text-black transition-colors duration-300">
         {icon}
       </div>

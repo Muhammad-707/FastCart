@@ -1,5 +1,5 @@
 import Card1 from './Card1';
-import { Store, CircleDollarSign, Package, HandCoins } from 'lucide-react'; // Используй иконки Lucide
+import { Store, CircleDollarSign, Package, HandCoins } from 'lucide-react'; 
 
 export default function Section2() {
   const stats = [

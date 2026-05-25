@@ -8,7 +8,6 @@ import SidebarCategories from './SideBarCategory';
 export default function Section1() {
   return (
     <section className="max-w-[1400px] mx-auto px-4 py-6">
-      {/* Мобильная версия: Sidebar сверху, затем Swiper */}
       <div className="md:hidden">
         <SidebarCategories />
         <Swiper className="w-full h-[500px] mb-6">
@@ -17,7 +16,6 @@ export default function Section1() {
         </Swiper>
       </div>
 
-      {/* Десктопная версия: Sidebar слева, Swiper справа */}
       <div className="hidden md:flex gap-10">
         <SidebarCategories />
         <div className="flex-1 overflow-hidden pt-6">

@@ -8,10 +8,16 @@ export default function Card1({ product }: any) {
   if (!product) return null;
 
   const title = product.title || product.name || "Без названия";
-  const image = product.image || product.img || product.thumbnail;
+  const rawImage = product.image || product.img || product.thumbnail;
   const price = product.price || 0;
   const oldPrice = product.oldPrice || product.old_price;
   const productId = product.id || product._id || product.title;
+
+  const imageUrl = rawImage?.startsWith('http') 
+    ? rawImage 
+    : rawImage 
+      ? `https://fastcard-1-o23z.onrender.com/images/${rawImage.replace(/^\/+/, '')}`
+      : '/placeholder.png';
 
   const hasDiscount = oldPrice && oldPrice > price;
   const discountPercent = hasDiscount ? Math.round(((oldPrice - price) / oldPrice) * 100) : null;
@@ -35,7 +41,7 @@ export default function Card1({ product }: any) {
     const productToAdd = {
       id: String(productId),
       name: title,
-      image: image,
+      image: imageUrl, 
       price: cleanPrice || 0,
       quantity: 1
     };
@@ -62,7 +68,7 @@ export default function Card1({ product }: any) {
         </button>
         
         <img 
-          src={image} 
+          src={imageUrl} 
           alt={title} 
           className="h-[150px] max-w-[80%] object-contain transition-transform duration-300 group-hover:scale-105" 
         />

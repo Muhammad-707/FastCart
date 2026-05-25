@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { addToCart } from '@/reducers/CartSlice';
 
 export default function Card1({ id, _id, title, price, rating, reviews, image }: any) {
   const productId = id || _id || title;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
 
-  // Синхронизация состояния лайка
   useEffect(() => {
     const checkWishlist = () => {
       const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
@@ -19,7 +20,7 @@ export default function Card1({ id, _id, title, price, rating, reviews, image }:
   }, [productId]);
 
   const toggleWishlist = (e: React.MouseEvent) => {
-    e.preventDefault();
+    e.stopPropagation();
     const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
     const itemIndex = savedWishlist.findIndex((item: any) => (item.id || item._id || item.title) === productId);
 
@@ -34,9 +35,8 @@ export default function Card1({ id, _id, title, price, rating, reviews, image }:
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
+    e.stopPropagation();
     
-    // Очистка цены
     const cleanPrice = typeof price === 'string' 
       ? parseFloat(price.replace(/[^0-9.]/g, '')) 
       : price;
@@ -49,17 +49,17 @@ export default function Card1({ id, _id, title, price, rating, reviews, image }:
       quantity: 1
     };
 
-    // 1. Диспатч в Redux
     dispatch(addToCart(productToAdd));
-
-    // 2. Пинг для обновления интерфейса
     window.dispatchEvent(new Event('cart-updated'));
   };
 
   return (
-    <div className="group w-full max-w-[270px] flex flex-col gap-3 transition-colors select-none">
+    <div 
+      onClick={() => navigate(`/detail/${productId}`)}
+      className="group w-full max-w-[270px] flex flex-col gap-3 transition-colors select-none cursor-pointer"
+    >
       <div className="relative bg-zinc-100 dark:bg-zinc-800 h-[250px] flex items-center justify-center rounded-sm overflow-hidden">
-        <img src={image} alt={title} className="h-[150px] object-contain transition-transform duration-300 group-hover:scale-105" />
+        <img src={image} alt={title} className="h-[150px] object-contain transition-transform duration-300" />
         
         <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
           <button 
@@ -75,7 +75,7 @@ export default function Card1({ id, _id, title, price, rating, reviews, image }:
             </svg>
           </button>
           <button className="bg-white dark:bg-black p-2 rounded-full shadow-sm hover:bg-gray-100 dark:hover:bg-zinc-700">
-            <svg className="dark:text-white" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <svg className="dark:text-white text-black" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
             </svg>
           </button>
