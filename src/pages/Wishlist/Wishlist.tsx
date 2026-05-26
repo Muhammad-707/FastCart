@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 
-
 import { fetchProducts } from "@/reducers/ProductSlice"; 
 import type { RootState, AppDispatch } from "@/store/store";
 
@@ -34,7 +33,7 @@ export default function Wishlist() {
         };
     }, [wishlist]);
 
-    const { items, products, loading, isLoading } = useSelector((state: RootState) => state.products);
+    const { items, products, loading, isLoading } = useSelector((state: RootState) => state.products as any);
 
     const recommendedProducts = Array.isArray(items)
         ? items
