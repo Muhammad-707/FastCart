@@ -3,13 +3,14 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '@/reducers/CartSlice';
 
-export default function Card1({ id, _id, title, price, rating, reviews, image }: any) {
+export default function Card1({ id, _id, title, price, rating, reviews, image, isLoading }: any) {
   const productId = id || _id || title;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
+    if (isLoading) return;
     const checkWishlist = () => {
       const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
       setIsLiked(savedWishlist.some((item: any) => (item.id || item._id || item.title) === productId));
@@ -17,7 +18,7 @@ export default function Card1({ id, _id, title, price, rating, reviews, image }:
     checkWishlist();
     window.addEventListener('wishlist-updated', checkWishlist);
     return () => window.removeEventListener('wishlist-updated', checkWishlist);
-  }, [productId]);
+  }, [productId, isLoading]);
 
   const toggleWishlist = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -52,6 +53,19 @@ export default function Card1({ id, _id, title, price, rating, reviews, image }:
     dispatch(addToCart(productToAdd));
     window.dispatchEvent(new Event('cart-updated'));
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-full max-w-[270px] flex flex-col gap-3 animate-pulse">
+        <div className="w-full h-[250px] bg-zinc-200 dark:bg-zinc-700 rounded-sm"></div>
+        <div className="flex flex-col gap-2">
+          <div className="h-4 bg-zinc-200 dark:bg-zinc-700 rounded w-3/4"></div>
+          <div className="h-4 bg-zinc-200 dark:bg-zinc-700 rounded w-1/4"></div>
+          <div className="h-4 bg-zinc-200 dark:bg-zinc-700 rounded w-1/2"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div 

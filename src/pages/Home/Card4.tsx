@@ -7,9 +7,10 @@ interface Props {
   label: string;
   isActive?: boolean;
   onClick?: () => void;
+  isLoading?: boolean;
 }
 
-export const Card4: React.FC<Props> = ({ id, icon, label, isActive, onClick }) => {
+export const Card4: React.FC<Props> = ({ id, icon, label, isActive, onClick, isLoading }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -20,6 +21,15 @@ export const Card4: React.FC<Props> = ({ id, icon, label, isActive, onClick }) =
       navigate(`/product?categoryId=${id}`);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-[145px] bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded-sm animate-pulse flex flex-col items-center justify-center gap-4">
+        <div className="w-6 h-6 bg-zinc-200 dark:bg-zinc-700 rounded-full"></div>
+        <div className="h-4 bg-zinc-200 dark:bg-zinc-700 rounded w-1/2"></div>
+      </div>
+    );
+  }
 
   return (
     <div

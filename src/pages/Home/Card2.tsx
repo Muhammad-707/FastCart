@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '@/reducers/CartSlice';
 
-export default function Card2({ discount, image, title, price, oldPrice, rating, id, _id, quantity }: any) {
+export default function Card2({ discount, image, title, price, oldPrice, rating, id, _id, quantity, isLoading }: any) {
   const productId = id || _id || title;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,10 +15,11 @@ export default function Card2({ discount, image, title, price, oldPrice, rating,
     : `https://fastcard-1-o23z.onrender.com/images/${image?.replace(/^\/+/, '')}`;
 
   useEffect(() => {
+    if (isLoading) return;
     const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
     const exists = savedWishlist.some((item: any) => (item.id || item._id || item.title) === productId);
     setIsLiked(exists);
-  }, [productId]);
+  }, [productId, isLoading]);
 
   const toggleWishlist = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -50,6 +51,22 @@ export default function Card2({ discount, image, title, price, oldPrice, rating,
     };
     dispatch(addToCart(productToAdd));
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-[270px] flex flex-col gap-4 animate-pulse">
+        <div className="w-full h-[250px] bg-zinc-200 dark:bg-zinc-800 rounded-sm"></div>
+        <div className="flex flex-col gap-2">
+          <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-3/4"></div>
+          <div className="flex gap-3">
+            <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-1/4"></div>
+            <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-1/4"></div>
+          </div>
+          <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-1/2"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div 

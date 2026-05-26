@@ -12,9 +12,10 @@ interface Card3Props {
   oldPrice?: string;
   rating: number;
   reviews: number;
+  isLoading?: boolean;
 }
 
-export default function Card3({ id, image, title, price, oldPrice, rating, reviews }: Card3Props) {
+export default function Card3({ id, image, title, price, oldPrice, rating, reviews, isLoading }: Card3Props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
@@ -31,6 +32,22 @@ export default function Card3({ id, image, title, price, oldPrice, rating, revie
     dispatch(addToCart({ id: String(productId), name: title, image: imageUrl, price: cleanPrice || 0, quantity: 1 }));
     window.dispatchEvent(new Event('cart-updated'));
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-[270px] flex flex-col gap-4 animate-pulse">
+        <div className="w-full h-[250px] bg-zinc-200 dark:bg-zinc-800 rounded-sm"></div>
+        <div className="flex flex-col gap-2">
+          <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-3/4"></div>
+          <div className="flex gap-3 text-base">
+            <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-1/4"></div>
+            <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-1/4"></div>
+          </div>
+          <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-1/2"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div 

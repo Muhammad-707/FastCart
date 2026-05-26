@@ -7,11 +7,11 @@ import Banner from "./Banner";
 import SidebarCategories from "./SideBarCategory";
 
 import appleLogo from "@/assets/1200px-Apple_gray_logo 1 (1).png";
-import i2 from "@/assets/images (2).jpg"
-import i3 from "@/assets/Без названия.jpg"
-import i4 from "@/assets/Без названия (1).jpg"
-import i5 from "@/assets/iPad-Air-2.webp"
-import i6 from "@/assets/images.jpg"
+import i2 from "@/assets/images (2).jpg";
+import i3 from "@/assets/Без названия.jpg";
+import i4 from "@/assets/Без названия (1).jpg";
+import i5 from "@/assets/iPad-Air-2.webp";
+import i6 from "@/assets/Apple-Watch-Series-8-drie-kasten.webp";
 
 import { useTranslation } from "react-i18next";
 
@@ -24,6 +24,14 @@ export default function Section1() {
       image: i3,
       title: "MacBook Pro M4",
       subtitle: `${t("text59")} 5% ${t("text59a")}`,
+      buttonText: t("text60"),
+      imageWidth: "w-full md:w-[600px]", 
+    },
+    {
+      logo: appleLogo,
+      image: i6,
+      title: "Apple Watch",
+      subtitle: `${t("text59")} 20% ${t("text59a")}`,
       buttonText: t("text60"),
       imageWidth: "w-full md:w-[600px]", 
     },
@@ -51,14 +59,6 @@ export default function Section1() {
       buttonText: t("text60"),
       imageWidth: "w-full md:w-[600px]", 
     },
-    {
-      logo: appleLogo,
-      image: i6,
-      title: "Apple Watch",
-      subtitle: `${t("text59")} 20% ${t("text59a")}`,
-      buttonText: t("text60"),
-      imageWidth: "w-full md:w-[800px]", 
-    },
   ];
 
   return (
@@ -66,7 +66,12 @@ export default function Section1() {
       <div className="md:hidden">
         <SidebarCategories />
 
-        <Swiper className="w-full h-[500px] mb-6">
+        <Swiper 
+          modules={[Pagination, Autoplay]}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          className="w-full h-[500px] mb-6"
+        >
           {banners.map((el, index) => (
             <SwiperSlide key={index}>
               <Banner
@@ -89,7 +94,7 @@ export default function Section1() {
           <Swiper
             modules={[Pagination, Autoplay]}
             pagination={{ clickable: true }}
-            autoplay={{ delay: 3000 }}
+            autoplay={{ delay: 4000, disableOnInteraction: false }}
             className="w-full lg:h-[420px] h-[500px]"
           >
             {banners.map((el, index) => (

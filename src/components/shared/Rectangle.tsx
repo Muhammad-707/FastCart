@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Truck, Headphones, ShieldCheck } from 'lucide-react';
 import { useTranslation } from "react-i18next";
 
@@ -25,30 +25,69 @@ const ServiceCard = ({ icon, title, description }: ServiceCardProps) => (
 );
 
 export default function ServicesSection() {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (sectionRef.current) observer.unobserve(sectionRef.current);
+        }
+      },
+      { threshold: 0.05, rootMargin: "0px 0px -100px 0px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="w-full py-24 bg-white dark:bg-zinc-950 transition-colors duration-300">
+    <section 
+      ref={sectionRef}
+      className={`w-full py-24 bg-white dark:bg-zinc-950 transition-colors duration-300 overflow-hidden ${isVisible ? 'is-visible' : ''}`}
+    >
+      <style>{`
+        .reveal-service {
+          opacity: 0;
+          transform: translateY(30px) scale(0.95);
+          transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .is-visible .reveal-service {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      `}</style>
+
       <div className="max-w-[1200px] mx-auto px-6 grid md:grid-cols-3 gap-12">
-        
-        <ServiceCard 
-          icon={<Truck size={30} strokeWidth={2} />}
-          title={t("text179")}
-          description={t("text180")}
-        />
+        <div className="reveal-service" style={{ transitionDelay: '0s' }}>
+          <ServiceCard 
+            icon={<Truck size={30} strokeWidth={2} />}
+            title={t("text179")}
+            description={t("text180")}
+          />
+        </div>
 
-        <ServiceCard 
-          icon={<Headphones size={30} strokeWidth={2} />}
-          title={t("text181")}
-          description={t("text182")}
-        />
+        <div className="reveal-service" style={{ transitionDelay: '0.1s' }}>
+          <ServiceCard 
+            icon={<Headphones size={30} strokeWidth={2} />}
+            title={t("text181")}
+            description={t("text182")}
+          />
+        </div>
 
-        <ServiceCard 
-          icon={<ShieldCheck size={30} strokeWidth={2} />}
-          title={t("text183")}
-          description={t("text184")}
-        />
-
+        <div className="reveal-service" style={{ transitionDelay: '0.2s' }}>
+          <ServiceCard 
+            icon={<ShieldCheck size={30} strokeWidth={2} />}
+            title={t("text183")}
+            description={t("text184")}
+          />
+        </div>
       </div>
     </section>
   );

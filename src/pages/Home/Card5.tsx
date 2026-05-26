@@ -4,7 +4,22 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '@/reducers/CartSlice';
 
-export default function Card5({ product }: { product: any }) {
+export default function Card5({ product, isLoading }: { product: any; isLoading?: boolean }) {
+  if (isLoading) {
+    return (
+      <div className="w-[270px] flex flex-col gap-4 animate-pulse">
+        <div className="w-full h-[250px] bg-zinc-200 dark:bg-zinc-800 rounded-sm"></div>
+        <div className="flex flex-col gap-2">
+          <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-3/4"></div>
+          <div className="flex items-center gap-4">
+            <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-1/4"></div>
+            <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-1/3"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (!product) return null;
   const { id, _id, image, productName, price, rating, quantity, isNew, colors } = product;
   const productId = id || _id || productName;
