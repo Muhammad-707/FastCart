@@ -41,7 +41,7 @@ export default function Section1() {
       title: "AirPods Pro",
       subtitle: `${t("text59")} 20% ${t("text59a")}`,
       buttonText: t("text60"),
-      imageWidth: "w-full md:w-[600px]", 
+      imageWidth: "w-full md:w-[550px]", 
     },
     {
       logo: appleLogo,
@@ -57,7 +57,7 @@ export default function Section1() {
       title: "Apple Watch",
       subtitle: `${t("text59")} 20% ${t("text59a")}`,
       buttonText: t("text60"),
-      imageWidth: "w-full md:w-[600px]", 
+      imageWidth: "w-full md:w-[800px]", 
     },
   ];
 

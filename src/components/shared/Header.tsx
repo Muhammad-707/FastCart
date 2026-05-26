@@ -234,9 +234,7 @@ export default function Header() {
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
             </svg>
             <span>{lang}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-zinc-400 mt-0.5">
-              <path d="m6 9 6 6 6-6" />
-            </svg>
+            
           </button>
 
           <Link to="/wishlist" className="text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 p-2 rounded-full transition-all relative block">
