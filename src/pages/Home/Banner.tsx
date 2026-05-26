@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom";
+
 type BannerProps = {
   logo: string;
   image: string;
   title: string;
   subtitle: string;
   buttonText: string;
-  imageWidth?: string; 
+  imageWidth?: string;
 };
 
 export default function Banner({
@@ -13,7 +15,7 @@ export default function Banner({
   title,
   subtitle,
   buttonText,
-  imageWidth = "w-full md:w-[500px]", 
+  imageWidth = "w-full md:w-[500px]",
 }: BannerProps) {
 
   return (
@@ -78,12 +80,17 @@ export default function Banner({
           {subtitle}
         </h1>
 
-        <div className="banner-btn-anim flex items-center gap-2 mt-2 group/btn cursor-pointer inline-flex">
-          <a href="#" className="border-b border-zinc-500 group-hover/btn:border-white pb-1 font-medium transition-colors duration-300">
+        <Link
+          to="/product"
+          className="banner-btn-anim flex items-center gap-2 mt-2 group/btn cursor-pointer inline-flex select-none"
+        >
+          <span className="border-b border-zinc-500 text-slate-200 group-hover/btn:border-white pb-1 font-medium transition-colors duration-300">
             {buttonText}
-          </a>
-          <span className="text-xl transition-transform duration-300 group-hover/btn:translate-x-2 text-[#DB4444]">→</span>
-        </div>
+          </span>
+          <span className="text-xl transition-transform duration-300 group-hover/btn:translate-x-2 text-[#DB4444]">
+            →
+          </span>
+        </Link>
       </div>
 
       <div className={`${imageWidth} h-[50%] md:h-full flex items-center justify-center md:justify-end mt-2 md:mt-0 z-10 relative`}>
