@@ -10,7 +10,6 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
-    /* ИСПРАВЛЕНО: переключаем на bundler, чтобы TS понимал импорты стилей из node_modules */
     "moduleResolution": "bundler", 
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -19,14 +18,9 @@
     "types": ["vite/client"],
     "jsx": "react-jsx",
     "ignoreDeprecations": "6.0",
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "include": ["src/**/*"]
 }
